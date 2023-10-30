@@ -3,31 +3,28 @@ const loginInput = document.querySelector("#login-form input");
 const greeting = document.querySelector("#greeting");
 
 const HIDDEN_CLASSNAME = "hidden";
-// 링크
-const link = document.querySelector("a");
+const USERNAME_KEY = "username";
+const savedUsername = localStorage.getItem("username");
 
-if(localStorage.value === ""){
+
+if(savedUsername === null){
+    function onLoginSubmit (event){
+        event.preventDefault();
+        const username = loginInput.value;
     
-}
-
-function onLoginSubmit (event){
-    event.preventDefault();
-
-    const username = loginInput.value;
-    localStorage.setItem("username",username);
-
+        localStorage.setItem(USERNAME_KEY,username);
+    
+        loginForm.classList.add(HIDDEN_CLASSNAME);
+        
+        // greeting.innerText = "Hello " + username;
+        greeting.innerText = `Hello ${username}`;
+        greeting.classList.remove(HIDDEN_CLASSNAME);
+    }
+}else{
     loginForm.classList.add(HIDDEN_CLASSNAME);
-    
-    // greeting.innerText = "Hello " + username;
-    greeting.innerText = `Hello ${username}`;
+    greeting.innerText = "Hello "+localStorage.getItem(USERNAME_KEY);
     greeting.classList.remove(HIDDEN_CLASSNAME);
 }
-
-// 링크
-// function handleLinkClick(event){
-//     event.preventDefault();
-//     alert("click");
-// }
 
 
 loginForm.addEventListener("submit",onLoginSubmit);
